@@ -1,6 +1,8 @@
 from __future__ import division, print_function
+
 import pytest
-import basic_python_api
+
+import basic_python_api  # noqa: F401
 
 
 def test_basic():
