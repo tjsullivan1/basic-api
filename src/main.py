@@ -1,15 +1,24 @@
-from typing import Union
-
 from fastapi import FastAPI
+from fastapi.staticfiles import StaticFiles
+
+from api import sample_api
+from views import home
 
 app = FastAPI()
 
 
-@app.get("/")
-def read_root():
-    return {"Hello": "World"}
+def configure():
+    configure_routing()
 
 
-@app.get("/items/{item_id}")
-def read_item(item_id: int, q: Union[str, None] = None):
-    return {"item_id": item_id, "q": q}
+def configure_routing():
+    app.mount("/static", StaticFiles(directory="static"), name="static")
+    app.include_router(home.router)
+    app.include_router(sample_api.router)
+
+
+if __name__ == "__main__":
+    configure()
+#  uvicorn.run(api, port=8000, host='127.0.0.1')
+else:
+    configure()
